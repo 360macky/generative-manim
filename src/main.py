@@ -9,6 +9,8 @@ st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkl
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
+"st.session_state object:", st.session_state
+
 code_response = '''circle = Circle()
 circle.set_fill("#FF0000", opacity=0.5)
 self.play(Create(circle))
@@ -40,7 +42,7 @@ generates_code = st.button(
     "Generate code :computer:", type="secondary")
 render_animation = st.button(
     "Render animation :magic_wand:", type="primary")
-code_input = st.text_area(label="Code generated: ", value=code_response)
+code_input = st.text_area(label="Code generated: ", value=code_response, key="manim_code")
 
 if generates_code:
 
