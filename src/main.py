@@ -19,14 +19,17 @@ openai_api_key = st.text_input(
 #  "Write your animation idea here", value=code_response)
 
 
-def extract_construct_content(source_code):
-  pattern = r"def construct\(self\):([\s\S]+?)\n\s*(?=[^ \t])"
-  match = re.search(pattern, source_code)
+def extract_construct_content(code: str) -> str:
+  pattern = re.compile(r"def construct\(self\):(\n\s*(?:.*))+")
+  match = pattern.search(code)
+
   if match:
-    return match.group(1)
+    body = match.group(0)
+    body = re.sub(r"def construct\(self\):", "", body)
+    return body.strip()
   else:
-    return None
-  
+    return ""
+
 def remove_indentation(text):
   lines = text.split("\n")
   stripped_lines = [line.lstrip() for line in lines]
@@ -53,7 +56,7 @@ if generates_animation or generates_only_code:
       response.choices[0].message.content)
 
   logger.info(response.choices[0].message.content)
-  
+
   generates_rendering = st.button("Render above code", type="primary")
 
   if code_response is None:
