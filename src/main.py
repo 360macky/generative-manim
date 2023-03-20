@@ -2,9 +2,12 @@ import streamlit as st
 import openai
 from manim import *
 import re
+import time
 
 st.title("Gemanim - Generative Manim")
 st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkles:")
+
+st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
 code_response = '''
 circle = Circle()
@@ -18,25 +21,15 @@ openai_api_key = st.text_input(
 # code_input = st.text_area(
 #  "Write your animation idea here", value=code_response)
 
+
 def extract_code(text: str) -> str:
   pattern = re.compile(r"```(.*?)```", re.DOTALL)
   match = pattern.search(text)
-
   if match:
     return match.group(1).strip()
   else:
-    return ""
+    return text
 
-def extract_construct_content(code: str) -> str:
-  pattern = re.compile(r"def construct\(self\):(\n\s*(?:.*))+")
-  match = pattern.search(code)
-
-  if match:
-    body = match.group(0)
-    body = re.sub(r"def construct\(self\):", "", body)
-    return body.strip()
-  else:
-    return ""
 
 def remove_indentation(text):
   lines = text.split("\n")
@@ -44,12 +37,19 @@ def remove_indentation(text):
   return "\n".join(stripped_lines)
 
 
-generates_only_code = st.button(
-    "Generate only code :computer:", type="secondary")
-generates_animation = st.button(
-    "Generate animation :magic_wand:", type="primary")
+generates_code = st.button(
+    "Generate code :computer:", type="secondary")
+render_animation = st.button(
+    "Render animation :magic_wand:", type="primary")
+code_input = st.text_area(label="Code generated: ", value=code_response)
 
-if generates_animation or generates_only_code:
+with st.empty():
+  for seconds in range(60):
+    st.write(f"⏳ {seconds} seconds have passed")
+    time.sleep(1)
+  st.write("✔️ 1 minute over!")
+
+if generates_code:
 
   openai.api_key = openai_api_key
 
@@ -72,7 +72,6 @@ if generates_animation or generates_only_code:
   else:
     logger.info(f"Awesome. Code response: {code_response}")
     code_response = remove_indentation(code_response)
-    code_response = st.text_area(label="Code generated: ", value=code_response)
 
   if generates_rendering:
     class GeneratedScene(Scene):
