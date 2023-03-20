@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "streamlit-manim"
+version = "0.1.0"
+description = ""
+authors = ["ash2shukla"]
+
+[tool.poetry.dependencies]
+python = "^3.9.8"
+manim = "^0.10.0"
+streamlit = "^1.14.0"
+protobuf = "^3.20.0"
+openai = "^0.27.2"
+streamlit_ace = "^0.1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
