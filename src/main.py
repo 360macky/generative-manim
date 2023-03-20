@@ -12,12 +12,11 @@ circle.set_fill("#FF0000", opacity=0.5)
 self.play(Create(circle))
 '''
 
-
 prompt = st.text_area("Write your animation idea here", "Draw a blue circle")
 openai_api_key = st.text_input(
     "Write your OpenAI API Key", value="", type="password")
-code_input = st.text_area(
-    "Write your animation idea here", value=code_response)
+# code_input = st.text_area(
+#  "Write your animation idea here", value=code_response)
 
 
 def extract_construct_content(source_code):
@@ -27,6 +26,11 @@ def extract_construct_content(source_code):
     return match.group(1)
   else:
     return None
+  
+def remove_indentation(text):
+  lines = text.split("\n")
+  stripped_lines = [line.lstrip() for line in lines]
+  return "\n".join(stripped_lines)
 
 
 generates_only_code = st.button(
@@ -48,14 +52,19 @@ if generates_animation or generates_only_code:
   code_response = extract_construct_content(
       response.choices[0].message.content)
 
+  logger.info(response.choices[0].message.content)
+  
+  generates_rendering = st.button("Render above code", type="primary")
+
   if code_response is None:
     logger.error("We could not extract the code from the response.")
     logger.info(f"Response: {response.choices[0].message.content}")
   else:
     logger.info(f"Awesome. Code response: {code_response}")
+    code_response = remove_indentation(code_response)
     code_response = st.text_area(label="Code generated: ", value=code_response)
 
-  if generates_animation:
+  if generates_animation or generates_rendering:
     class GeneratedScene(Scene):
       def construct(self):
         exec(code_response)
