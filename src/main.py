@@ -43,22 +43,6 @@ render_animation = st.button(
     "Render animation :magic_wand:", type="primary")
 code_input = st.text_area(label="Code generated: ", value=code_response)
 
-placeholder = st.empty()
-
-# Replace the placeholder with some text:
-placeholder.text("Hello")
-
-# Replace the text with a chart:
-placeholder.line_chart({"data": [1, 5, 2, 6]})
-
-# Replace the chart with several elements:
-with placeholder.container():
-  st.write("This is one element")
-  st.write("This is another")
-
-# Clear all those elements:
-placeholder.empty()
-
 if generates_code:
 
   openai.api_key = openai_api_key
@@ -83,9 +67,9 @@ if generates_code:
     logger.info(f"Awesome. Code response: {code_response}")
     code_response = remove_indentation(code_response)
 
-  if generates_rendering:
-    class GeneratedScene(Scene):
-      def construct(self):
-        exec(code_response)
-    GeneratedScene().render()
-    st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+if render_animation:
+  class GeneratedScene(Scene):
+    def construct(self):
+      exec(code_response)
+  GeneratedScene().render()
+  st.video("media/videos/1080p60.0/GeneratedScene.mp4")
