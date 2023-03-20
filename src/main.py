@@ -9,8 +9,7 @@ st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkl
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
-code_response = '''
-circle = Circle()
+code_response = '''circle = Circle()
 circle.set_fill("#FF0000", opacity=0.5)
 self.play(Create(circle))
 '''
