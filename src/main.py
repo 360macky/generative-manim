@@ -74,9 +74,9 @@ if generates_animation or generates_only_code:
     code_response = remove_indentation(code_response)
     code_response = st.text_area(label="Code generated: ", value=code_response)
 
-  if generates_animation or generates_rendering:
-    class GeneratedScene(Scene):
-      def construct(self):
-        exec(code_response)
-    GeneratedScene().render()
-    st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+if generates_animation or generates_rendering:
+  class GeneratedScene(Scene):
+    def construct(self):
+      exec(code_response)
+  GeneratedScene().render()
+  st.video("media/videos/1080p60.0/GeneratedScene.mp4")
