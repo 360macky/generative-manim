@@ -67,6 +67,7 @@ if generates_code:
   else:
     logger.info(f"Awesome. Code response: {code_response}")
     code_response = remove_indentation(code_response)
+    st.session_state['manim_code'] = code_response
 
 if render_animation:
   class GeneratedScene(Scene):
