@@ -18,6 +18,14 @@ openai_api_key = st.text_input(
 # code_input = st.text_area(
 #  "Write your animation idea here", value=code_response)
 
+def extract_code(text: str) -> str:
+  pattern = re.compile(r"```(.*?)```", re.DOTALL)
+  match = pattern.search(text)
+
+  if match:
+    return match.group(1).strip()
+  else:
+    return ""
 
 def extract_construct_content(code: str) -> str:
   pattern = re.compile(r"def construct\(self\):(\n\s*(?:.*))+")
@@ -52,8 +60,7 @@ if generates_animation or generates_only_code:
       max_tokens=200
   )
 
-  code_response = extract_construct_content(
-      response.choices[0].message.content)
+  code_response = extract_code(response.choices[0].message.content)
 
   logger.info(response.choices[0].message.content)
 
