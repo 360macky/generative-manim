@@ -53,6 +53,7 @@ if generates_animation or generates_only_code:
     logger.info(f"Response: {response.choices[0].message.content}")
   else:
     logger.info(f"Awesome. Code response: {code_response}")
+    code_response = st.text_area(value=code_response)
 
   if generates_animation:
     class GeneratedScene(Scene):
