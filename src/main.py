@@ -45,8 +45,8 @@ code_response = ""
 
 if generates_code:
 
+  # If user has their own API key, use it
   if not openai_api_key:
-    # get the default API key from secrets
     openai.api_key = st.secrets["openai_api_key"]
   else:
     openai.api_key = openai_api_key
@@ -55,8 +55,6 @@ if generates_code:
   if len(prompt) > 240:
     st.error("Error: Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
     st.stop()
-
-  
 
   response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
@@ -85,7 +83,7 @@ if generates_code:
   except FileNotFoundError:
     st.error("Error: I couldn't find the generated video file. I know this is a bug and I'm working on it. Please reload the page.")
   except:
-    st.error("Error: Something went wrong. Please reload the page.")
+    st.error("Error: Something went wrong processing your prompt. Please reload the page.")
 
 st.write('Made with :heart: by [Marcelo Arias](https://github.com/360macky).')
 st.write('[Source code](https://github.com/360macky/generative-manim) - [Report a bug](https://github.com/360macky/generative-manim/issues/new) - [Twitter](https://twitter.com/360macky)')
