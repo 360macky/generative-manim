@@ -70,6 +70,10 @@ if generates_code:
   code_response = remove_indentation(code_response)
   st.session_state['is_code_generated'] = True
 
+  # If media/videos/1080p60.0/GeneratedScene.mp4 exists, delete it
+  if os.path.exists("media/videos/1080p60.0/GeneratedScene.mp4"):
+    os.remove("media/videos/1080p60.0/GeneratedScene.mp4")
+
 # code_input = ""
 if st.session_state['is_code_generated']:
   # Maybe code_response should be declared before...
