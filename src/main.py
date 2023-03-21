@@ -44,13 +44,22 @@ show_code = st.checkbox("Show generated code")
 code_response = ""
 
 if generates_code:
+  
+  if not openai_api_key:
+    st.error("You need to provide an OpenAI API key. Get one [here](https://platform.openai.com/account/api-keys).")
+    st.stop()
+
+  # If prompt exceeds 240 characters, it will be truncated
+  if len(prompt) > 240:
+    st.error("Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
+    st.stop()
 
   openai.api_key = openai_api_key
 
   response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
-      messages=[{"role": "system", "content": "You only write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GeneratedScene(Scene):```\n  def construct(self):\n  # Write here"},
-                {"role": "user", "content": f"New Animation Request: {prompt}. Only code."}],
+      messages=[{"role": "system", "content": "You write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
+                {"role": "user", "content": f"New Animation Request: {prompt}"}],
       max_tokens=300
   )
 
@@ -64,11 +73,12 @@ if generates_code:
                  value=code_response,
                  key="code_input")
 
-  class GeneratedScene(Scene):
+  class GenScene(Scene):
     def construct(self):
       exec(code_response)
 
-  GeneratedScene().render()
-  st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+  GenScene().render()
+  st.video("media/videos/1080p60.0/GenScene.mp4")
 
 st.write('Made with :heart: by [Marcelo Arias](https://github.com/360macky).')
+st.write('[Source code](https://github.com/360macky/generative-manim) - [Report a bug](https://github.com/360macky/generative-manim/issues/new) - [Twitter](https://twitter.com/360macky)')
