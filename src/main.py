@@ -1,11 +1,10 @@
 import streamlit as st
-import openai
 from manim import *
+import openai
 import re
-import os
 
-st.title("Gemanim - Generative Manim")
-st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkles:")
+st.title("Generative Manim")
+st.write("Create 2D/3D animations with GPT-3.5. :sparkles:")
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
@@ -53,7 +52,7 @@ if generates_code:
   response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
       messages=[{"role": "system", "content": "You only write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GeneratedScene(Scene):```\n  def construct(self):\n  # Write here"},
-                {"role": "user", "content": f"Animation Request: {prompt}. Only code."}],
+                {"role": "user", "content": f"New Animation Request: {prompt}. Only code."}],
       max_tokens=200
   )
 
@@ -61,9 +60,6 @@ if generates_code:
 
   code_response = remove_indentation(extract_construct_code(code_response))
   st.session_state['is_code_generated'] = True
-
-  # if os.path.exists("media/videos/1080p60.0/GeneratedScene.mp4"):
-  #   os.remove("media/videos/1080p60.0/GeneratedScene.mp4")
 
   if show_code:
     st.text_area(label="Code generated: ",
@@ -76,8 +72,3 @@ if generates_code:
 
   GeneratedScene().render()
   st.video("media/videos/1080p60.0/GeneratedScene.mp4")
-
-# render_animation = st.button(
-#     "Render animation :magic_wand:", type="primary")
-
-# if render_animation:
