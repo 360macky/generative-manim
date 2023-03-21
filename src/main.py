@@ -4,15 +4,13 @@ import openai
 import re
 
 st.title("Generative Manim")
-st.write("Create 2D/3D animations with GPT-3.5. :sparkles:")
-
-st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
+st.write(":robot_face: Create quick animations with GPT-3.5. :sparkles:")
 
 if 'is_code_generated' not in st.session_state:
   st.session_state['is_code_generated'] = False
   st.session_state['code_input'] = ""
 
-prompt = st.text_area("Write your animation idea here", "Draw a blue circle")
+prompt = st.text_area("Write your animation idea here", "Draw a blue circle and convert it to a red square")
 openai_api_key = st.text_input(
     "Write your OpenAI API Key", value="", type="password")
 
@@ -53,7 +51,7 @@ if generates_code:
       model="gpt-3.5-turbo",
       messages=[{"role": "system", "content": "You only write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GeneratedScene(Scene):```\n  def construct(self):\n  # Write here"},
                 {"role": "user", "content": f"New Animation Request: {prompt}. Only code."}],
-      max_tokens=200
+      max_tokens=300
   )
 
   code_response = extract_code(response.choices[0].message.content)
@@ -72,3 +70,5 @@ if generates_code:
 
   GeneratedScene().render()
   st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+
+st.write('Made with :heart: by [Marcelo Arias](https://github.com/360macky).')
