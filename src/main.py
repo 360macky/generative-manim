@@ -70,9 +70,10 @@ if generates_code:
   code_response = remove_indentation(code_response)
   st.session_state['is_code_generated'] = True
 
-code_input = ""
+# code_input = ""
 if st.session_state['is_code_generated']:
   # Maybe code_response should be declared before...
+  # Press Cmd+Apply here
   code_input = st.text_area(label="Code generated: ", value=code_response, key="code_input")
 
 render_animation = st.button(
