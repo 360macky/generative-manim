@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 from manim import *
 import re
-from streamlit.components.v1 import html
+import os
 
 st.title("Gemanim - Generative Manim")
 st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkles:")
