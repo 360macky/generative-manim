@@ -9,7 +9,7 @@ st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkl
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
-"st.session_state object:", st.session_state
+# "st.session_state object:", st.session_state
 
 # logger.info('initializing session state')
 
@@ -46,7 +46,7 @@ def remove_indentation(text: str) -> str:
 
 
 generates_code = st.button(
-    "Generate code :computer:", type="secondary")
+    ":computer: Animate :magic:", type="secondary")
 
 code_response = ""
 
@@ -84,6 +84,7 @@ if generates_code:
       exec(code_response)
 
   GeneratedScene().render()
+  st.video("media/videos/1080p60.0/GeneratedScene.mp4")
 
 # render_animation = st.button(
 #     "Render animation :magic_wand:", type="primary")
