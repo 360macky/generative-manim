@@ -15,7 +15,9 @@ html("<textarea>Hello</textarea>")
 "st.session_state object:", st.session_state
 
 logger.info('initializing session state')
-st.session_state['is_code_generated'] = False
+
+if 'is_code_generated' not in st.session_state:
+  st.session_state['is_code_generated'] = False
 
 # code_response = '''circle = Circle()
 # circle.set_fill("#FF0000", opacity=0.5)
@@ -69,6 +71,7 @@ if generates_code:
 
 code_input = ""
 if st.session_state['is_code_generated']:
+  # Maybe code_response should be declared before...
   code_input = st.text_area(label="Code generated: ", value=code_response)
 
 if render_animation:
