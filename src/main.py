@@ -11,7 +11,7 @@ st.write("This is a two-step process. You first will generate code, then you wil
 
 "st.session_state object:", st.session_state
 
-st.session_state['is_code_generated'] = False
+# st.session_state['is_code_generated'] = False
 
 # code_response = '''circle = Circle()
 # circle.set_fill("#FF0000", opacity=0.5)
