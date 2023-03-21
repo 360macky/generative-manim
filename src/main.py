@@ -4,7 +4,7 @@ import openai
 import re
 
 st.title(":art: Generative Manim")
-st.write(":robot_face: Create quick animations with GPT-3.5. :sparkles:")
+st.write(":robot_face: Create beautiful and quick animations with GPT-3.5. :sparkles:")
 
 if 'is_code_generated' not in st.session_state:
   st.session_state['is_code_generated'] = False
@@ -12,7 +12,7 @@ if 'is_code_generated' not in st.session_state:
 
 prompt = st.text_area("Write your animation idea here. Use simple words.", "Draw a blue circle and convert it to a red square")
 
-if st.checkbox("Use my own [Open API Key](https://platform.openai.com/account/api-keys)"):
+if st.checkbox("Use my own Open API Key (optional just today)"):
   openai_api_key = st.text_input("Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
 
 def extract_code(text: str) -> str:
@@ -80,7 +80,12 @@ if generates_code:
       exec(code_response)
 
   GenScene().render()
-  st.video("media/videos/1080p60.0/GenScene.mp4")
+  try:
+    st.video("media/videos/1080p60.0/GenScene.mp4")
+  except FileNotFoundError:
+    st.error("Error: I couldn't find the generated video file. I know this is a bug and I'm working on it. Please reload the page.")
+  except:
+    st.error("Error: Something went wrong. Please reload the page.")
 
 st.write('Made with :heart: by [Marcelo Arias](https://github.com/360macky).')
 st.write('[Source code](https://github.com/360macky/generative-manim) - [Report a bug](https://github.com/360macky/generative-manim/issues/new) - [Twitter](https://twitter.com/360macky)')
