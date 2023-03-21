@@ -9,10 +9,6 @@ st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkl
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
 
-# "st.session_state object:", st.session_state
-
-# logger.info('initializing session state')
-
 if 'is_code_generated' not in st.session_state:
   st.session_state['is_code_generated'] = False
   st.session_state['code_input'] = ""
@@ -45,8 +41,8 @@ def remove_indentation(text: str) -> str:
   return "\n".join(stripped_lines)
 
 
-generates_code = st.button(
-    ":computer: Animate :magic:", type="secondary")
+generates_code = st.button(":computer: Animate :sparkles:", type="primary")
+show_code = st.checkbox("Show generated code")
 
 code_response = ""
 
@@ -63,21 +59,16 @@ if generates_code:
 
   code_response = extract_code(response.choices[0].message.content)
 
-  logger.info(response.choices[0].message.content)
-
-  generates_rendering = st.button("Render above code", type="primary")
-
-  logger.info(code_response)
   code_response = remove_indentation(extract_construct_code(code_response))
   st.session_state['is_code_generated'] = True
 
   # if os.path.exists("media/videos/1080p60.0/GeneratedScene.mp4"):
   #   os.remove("media/videos/1080p60.0/GeneratedScene.mp4")
 
-# if st.session_state['is_code_generated']:
-  st.text_area(label="Code generated: ",
-               value=code_response,
-               key="code_input")
+  if show_code:
+    st.text_area(label="Code generated: ",
+                 value=code_response,
+                 key="code_input")
 
   class GeneratedScene(Scene):
     def construct(self):
