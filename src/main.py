@@ -48,6 +48,8 @@ generates_code = st.button(
 render_animation = st.button(
     "Render animation :magic_wand:", type="primary")
 
+code_response=""
+
 if generates_code:
 
   openai.api_key = openai_api_key
