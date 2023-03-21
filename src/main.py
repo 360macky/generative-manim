@@ -3,16 +3,16 @@ from manim import *
 import openai
 import re
 
-st.title("Generative Manim")
+st.title(":art: Generative Manim")
 st.write(":robot_face: Create quick animations with GPT-3.5. :sparkles:")
 
 if 'is_code_generated' not in st.session_state:
   st.session_state['is_code_generated'] = False
   st.session_state['code_input'] = ""
 
-prompt = st.text_area("Write your animation idea here", "Draw a blue circle and convert it to a red square")
+prompt = st.text_area("Write your animation idea here. Use simple words.", "Draw a blue circle and convert it to a red square")
 openai_api_key = st.text_input(
-    "Write your OpenAI API Key", value="", type="password")
+    "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
 
 
 def extract_code(text: str) -> str:
