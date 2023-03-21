@@ -11,17 +11,16 @@ st.write("This is a two-step process. You first will generate code, then you wil
 
 "st.session_state object:", st.session_state
 
-code_response = '''circle = Circle()
-circle.set_fill("#FF0000", opacity=0.5)
-self.play(Create(circle))
-'''
+st.session_state['is_code_generated'] = False
+
+# code_response = '''circle = Circle()
+# circle.set_fill("#FF0000", opacity=0.5)
+# self.play(Create(circle))
+# '''
 
 prompt = st.text_area("Write your animation idea here", "Draw a blue circle")
 openai_api_key = st.text_input(
     "Write your OpenAI API Key", value="", type="password")
-# code_input = st.text_area(
-#  "Write your animation idea here", value=code_response)
-
 
 def extract_code(text: str) -> str:
   pattern = re.compile(r"```(.*?)```", re.DOTALL)
@@ -42,7 +41,6 @@ generates_code = st.button(
     "Generate code :computer:", type="secondary")
 render_animation = st.button(
     "Render animation :magic_wand:", type="primary")
-code_input = st.text_area(label="Code generated: ", value=code_response, key="manim_code")
 
 if generates_code:
 
@@ -61,17 +59,17 @@ if generates_code:
 
   generates_rendering = st.button("Render above code", type="primary")
 
-  if code_response is None:
-    logger.error("We could not extract the code from the response.")
-    logger.info(f"Response: {response.choices[0].message.content}")
-  else:
-    logger.info(f"Awesome. Code response: {code_response}")
-    code_response = remove_indentation(code_response)
-    st.session_state['manim_code'] = code_response
+  logger.info(code_response)
+  code_response = remove_indentation(code_response)
+  st.session_state['is_code_generated'] = True
+
+code_input = ""
+if st.session_state['is_code_generated']:
+  code_input = st.text_area(label="Code generated: ", value=code_response)
 
 if render_animation:
   class GeneratedScene(Scene):
     def construct(self):
-      exec(code_response)
+      exec(code_input)
   GeneratedScene().render()
   st.video("media/videos/1080p60.0/GeneratedScene.mp4")
