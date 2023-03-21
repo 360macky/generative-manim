@@ -10,3 +10,6 @@ st.write("## What is GPT-3.5?")
 
 st.write("GPT-3.5 is the latest API-available version of OpenAI's GPT model. It's a language model behind ChatGPT. GPT-4 itself is not available as an API.")
 
+st.write("## How the future could be?")
+
+st.write("Imagine a video editor that allows you to create animations just by writing a text. Manim could be that way the videos are created.")
