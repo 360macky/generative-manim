@@ -11,9 +11,9 @@ if 'is_code_generated' not in st.session_state:
   st.session_state['code_input'] = ""
 
 prompt = st.text_area("Write your animation idea here. Use simple words.", "Draw a blue circle and convert it to a red square")
-openai_api_key = st.text_input(
-    "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
 
+if st.checkbox("Use my own [Open API Key](https://platform.openai.com/account/api-keys)"):
+  openai_api_key = st.text_input("Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
 
 def extract_code(text: str) -> str:
   pattern = re.compile(r"```(.*?)```", re.DOTALL)
@@ -44,17 +44,19 @@ show_code = st.checkbox("Show generated code")
 code_response = ""
 
 if generates_code:
-  
+
   if not openai_api_key:
-    st.error("You need to provide an OpenAI API key. Get one [here](https://platform.openai.com/account/api-keys).")
-    st.stop()
+    # get the default API key from secrets
+    openai.api_key = st.secrets["openai_api_key"]
+  else:
+    openai.api_key = openai_api_key
 
   # If prompt exceeds 240 characters, it will be truncated
   if len(prompt) > 240:
-    st.error("Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
+    st.error("Error: Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
     st.stop()
 
-  openai.api_key = openai_api_key
+  
 
   response = openai.ChatCompletion.create(
       model="gpt-3.5-turbo",
