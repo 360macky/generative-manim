@@ -2,12 +2,15 @@ import streamlit as st
 import openai
 from manim import *
 import re
-import time
+from streamlit.components.v1 import html
 
 st.title("Gemanim - Generative Manim")
 st.write("Create 2D/3D animations with GPT-3.5 or experiment with GPT-4. :sparkles:")
 
 st.write("This is a two-step process. You first will generate code, then you will able to edit it and render it.")
+
+html("<b>Hey, this is a quick </b>")
+html("<textarea>Hello</textarea>")
 
 "st.session_state object:", st.session_state
 
