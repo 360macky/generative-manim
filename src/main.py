@@ -29,6 +29,7 @@ prompt = st.text_area("Write your animation idea here", "Draw a blue circle")
 openai_api_key = st.text_input(
     "Write your OpenAI API Key", value="", type="password")
 
+
 def extract_code(text: str) -> str:
   pattern = re.compile(r"```(.*?)```", re.DOTALL)
   match = pattern.search(text)
@@ -47,7 +48,7 @@ def remove_indentation(text):
 generates_code = st.button(
     "Generate code :computer:", type="secondary")
 
-code_response=""
+code_response = ""
 
 if generates_code:
 
@@ -78,14 +79,22 @@ if generates_code:
 if st.session_state['is_code_generated']:
   # Maybe code_response should be declared before...
   # Press Cmd+Apply here
-  code_input = st.text_area(label="Code generated: ", value=code_response, key="code_input")
+  code_input = st.text_area(label="Code generated: ",
+                            value=code_response, key="code_input")
 
 render_animation = st.button(
-  "Render animation :magic_wand:", type="primary")
+    "Render animation :magic_wand:", type="primary")
 
 if render_animation:
   class GeneratedScene(Scene):
     def construct(self):
       exec(st.session_state['code_input'])
   GeneratedScene().render()
-  st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+  try:
+    st.video("media/videos/1080p60.0/GeneratedScene.mp4")
+  except:
+    st.write("We can't find your video, but it's here:")
+    # Lists all the items of the folder media/videos/1080p60.0:
+    files = [f for f in os.listdir('media/videos/1080p60.0') if os.path.isfile(os.path.join('media/videos/1080p60.0', f))]
+    logger.info(files)
+
