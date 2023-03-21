@@ -39,7 +39,15 @@ def extract_code(text: str) -> str:
     return text
 
 
-def remove_indentation(text):
+def extract_construct_code(code_str):
+  pattern = r"def construct\(self\):([\s\S]*)"
+  match = re.search(pattern, code_str)
+  if match:
+    return match.group(1)
+  else:
+    return ""
+
+def remove_indentation(text: str) -> str:
   lines = text.split("\n")
   stripped_lines = [line.lstrip() for line in lines]
   return "\n".join(stripped_lines)
@@ -68,19 +76,16 @@ if generates_code:
   generates_rendering = st.button("Render above code", type="primary")
 
   logger.info(code_response)
-  code_response = remove_indentation(code_response)
+  code_response = remove_indentation(extract_construct_code(code_response))
   st.session_state['is_code_generated'] = True
 
-  # If media/videos/1080p60.0/GeneratedScene.mp4 exists, delete it
   if os.path.exists("media/videos/1080p60.0/GeneratedScene.mp4"):
     os.remove("media/videos/1080p60.0/GeneratedScene.mp4")
 
-# code_input = ""
 if st.session_state['is_code_generated']:
-  # Maybe code_response should be declared before...
-  # Press Cmd+Apply here
   code_input = st.text_area(label="Code generated: ",
-                            value=code_response, key="code_input")
+                            value=code_response,
+                            key="code_input")
 
 render_animation = st.button(
     "Render animation :magic_wand:", type="primary")
@@ -90,11 +95,3 @@ if render_animation:
     def construct(self):
       exec(st.session_state['code_input'])
   GeneratedScene().render()
-  try:
-    st.video("media/videos/1080p60.0/GeneratedScene.mp4")
-  except:
-    st.write("We can't find your video, but it's here:")
-    # Lists all the items of the folder media/videos/1080p60.0:
-    files = [f for f in os.listdir('media/videos/1080p60.0') if os.path.isfile(os.path.join('media/videos/1080p60.0', f))]
-    logger.info(files)
-
