@@ -4,6 +4,11 @@ import openai
 
 from utils import *
 
+st.set_page_config(
+  page_title="Generator",
+  page_icon="👋",
+)
+
 st.title(":art: Generative Manim")
 st.write(":robot_face: Create beautiful and quick animations with GPT-3.5. :sparkles:")
 
