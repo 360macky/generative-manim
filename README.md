@@ -22,5 +22,10 @@
 
 ---
 
-![Blueprint](./src/pages/blueprint.svg)
+![Preview](./.github/preview.jpg)
 
+## ⚡️ How it works
+
+For more details, check out the [How it works](https://generative-manim.streamlit.app/%EF%B8%8F_How_it_works) section.
+
+![Blueprint](./src/pages/blueprint.png)
