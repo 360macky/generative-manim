@@ -29,4 +29,15 @@ But now, with GPT-3.5, we can do more.
             
 blueprint = Image.open("blueprint.svg")
             
-st.image(blueprint, caption="Blueprint of Generative Manim")
+st.image(blueprint, caption="Blueprint of Generative Manim", output_format="PNG")
+
+st.write("## Acknowledgements")
+
+st.markdown("""
+
+- [Ashish Shukla](https://github.com/treuille/streamlit-manim/issues/1#issuecomment-1475134874) - For providing the Docker to run Manim in Streamlit.
+- [Manim Reddit Community](https://www.reddit.com/r/manim/) - The community of Manim developers.
+- [OpenAI Community](https://community.openai.com) - The community of OpenAI developers.
+- [Machine Learning Street Talk](https://twitter.com/MLStreetTalk/status/1636647985621745664) - The other tweet that inspired this concept for the GPT-4 application.
+
+""")
