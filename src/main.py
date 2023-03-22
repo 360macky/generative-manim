@@ -1,7 +1,8 @@
 import streamlit as st
 from manim import *
 import openai
-import re
+
+from utils import *
 
 st.title(":art: Generative Manim")
 st.write(":robot_face: Create beautiful and quick animations with GPT-3.5. :sparkles:")
@@ -12,31 +13,9 @@ if 'is_code_generated' not in st.session_state:
 
 prompt = st.text_area("Write your animation idea here. Use simple words.", "Draw a blue circle and convert it to a red square")
 
-if st.checkbox("Use my own Open API Key (optional just today)"):
+if st.checkbox("Use own Open API Key (optional)"):
   openai_api_key = st.text_input("Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
-
-def extract_code(text: str) -> str:
-  pattern = re.compile(r"```(.*?)```", re.DOTALL)
-  match = pattern.search(text)
-  if match:
-    return match.group(1).strip()
-  else:
-    return text
-
-
-def extract_construct_code(code_str):
-  pattern = r"def construct\(self\):([\s\S]*)"
-  match = re.search(pattern, code_str)
-  if match:
-    return match.group(1)
-  else:
-    return ""
-
-def remove_indentation(text: str) -> str:
-  lines = text.split("\n")
-  stripped_lines = [line.lstrip() for line in lines]
-  return "\n".join(stripped_lines)
-
+  openai_model = st.selectbox("Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
 
 generates_code = st.button(":computer: Animate :sparkles:", type="primary")
 show_code = st.checkbox("Show generated code")
@@ -51,13 +30,16 @@ if generates_code:
   else:
     openai.api_key = openai_api_key
 
+  if not openai_model:
+    openai_model = "gpt-4"
+
   # If prompt exceeds 240 characters, it will be truncated
   if len(prompt) > 240:
     st.error("Error: Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
     st.stop()
 
   response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
+      model="gpt-4",
       messages=[{"role": "system", "content": "You write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
                 {"role": "user", "content": f"New Animation Request: {prompt}"}],
       max_tokens=300
