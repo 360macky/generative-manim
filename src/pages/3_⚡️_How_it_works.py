@@ -27,7 +27,7 @@ But now, with GPT-3.5, we can do more.
 
 """)
             
-blueprint = Image.open("blueprint.png")
+blueprint = Image.open("./blueprint.png")
             
 st.image(blueprint, caption="Blueprint of Generative Manim", output_format="PNG")
 
