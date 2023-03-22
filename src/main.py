@@ -39,7 +39,7 @@ if generates_code:
     st.stop()
 
   response = openai.ChatCompletion.create(
-      model="gpt-4",
+      model=openai_model.lower(),
       messages=[{"role": "system", "content": "You write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
                 {"role": "user", "content": f"New Animation Request: {prompt}"}],
       max_tokens=300
@@ -67,5 +67,5 @@ if generates_code:
   except:
     st.error("Error: Something went wrong processing your prompt. Please reload the page.")
 
-st.write('Made with :heart: by [Marcelo Arias](https://github.com/360macky).')
+st.write('Made with :heart: by [Marcelo (@360macky)](https://github.com/360macky).')
 st.write('[Source code](https://github.com/360macky/generative-manim) - [Report a bug](https://github.com/360macky/generative-manim/issues/new) - [Twitter](https://twitter.com/360macky)')
