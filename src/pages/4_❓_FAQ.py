@@ -6,6 +6,14 @@ st.write("## How the future could be?")
 
 st.write("Imagine a video editor that allows you to create animations just by writing a text. Manim could be that way the videos are created.")
 
+st.write("## How can I modify this app?")
+
+st.markdown("""
+If you want to experiment over this concept you can fork the [GitHub Repository](https://github.com/360macky/generative-manim), then create an account at [Streamlit](https://streamlit.io/), open the [Dashboard](https://share.streamlit.io/), click on the *New App* button, and then click on the *GitHub* button. Then you can deploy the app to Streamlit, then search for the forked repository, in Main file path write `src/main.py` and finally click on the *Deploy!* button.
+
+Now you can update the cloned repository and view the changes in your Streamlit app. If you believe that your changes are useful, you can open a pull request to the original repository. Pull requests are warmly welcome.
+""")
+
 st.write("## What is Manim?")
 
 st.write("Manim is a Python library for creating mathematical animations. It's open source. The version used in this Streamlit app is Manim Community, a fork of the original Manim library.")
