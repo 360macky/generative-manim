@@ -2,6 +2,10 @@ import streamlit as st
 
 st.title("❓ FAQ")
 
+st.markdown("""
+If you have any other questions, please tell me at [Twitter](https://twitter.com/360macky)!
+""")
+
 st.write("## How the future could be?")
 
 st.write("Imagine a video editor that allows you to create animations just by writing a text. Manim could be that way the videos are created.")
