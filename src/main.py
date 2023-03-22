@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 st.title(":art: Generative Manim")
-st.write(":robot_face: Create beautiful and quick animations with GPT-3.5. :sparkles:")
+st.write(":robot_face: Create beautiful and quick animations with GPT-4 and GPT-3.5 :sparkles:")
 
 prompt = st.text_area("Write your animation idea here. Use simple words.",
                       "Draw a blue circle and convert it to a red square", max_chars=240)
