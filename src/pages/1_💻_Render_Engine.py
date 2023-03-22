@@ -5,8 +5,16 @@ st.title('💻 Render Engine')
 
 st.write("Quick engine to render Manim code. Paste your code, and click generate. That's it!")
 
+code_example = """
+circle = Circle(color=BLUE)
+self.play(Create(circle))
+square = Square(color=RED)
+self.play(Transform(circle, square))
+self.wait()
+"""
+
 code_response = st.text_area(label="Code generated: ",
-                             value="",
+                             value=code_example,
                              key="code_input")
 
 generates_code = st.button(
