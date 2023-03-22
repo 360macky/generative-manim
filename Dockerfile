@@ -17,4 +17,4 @@ RUN poetry install
 
 COPY src /app/src
 
-CMD ["poetry", "run", "streamlit", "run", "/app/src/main.py"]
+CMD ["poetry", "run", "streamlit", "run", "/app/src/Generator.py"]
