@@ -72,5 +72,5 @@ if generates_code:
   except:
     st.error("Error: Something went wrong processing your prompt. Please reload the page.")
 
-st.write('Made with :heart: by [Marcelo (@360macky)](https://github.com/360macky).')
+st.write('Made with :heart: by [Marcelo](https://github.com/360macky).')
 st.write('[Source code](https://github.com/360macky/generative-manim) - [Report a bug](https://github.com/360macky/generative-manim/issues/new) - [Twitter](https://twitter.com/360macky)')
