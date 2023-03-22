@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 
 st.title("⚡️ How it works")
 
@@ -25,3 +26,7 @@ But now, with GPT-3.5, we can do more.
 
 
 """)
+            
+blueprint = Image.open("blueprint.svg")
+            
+st.image(blueprint, caption="Blueprint of Generative Manim")
