@@ -14,6 +14,9 @@ st.write(":robot_face: Create beautiful and quick animations with GPT-3.5. :spar
 
 prompt = st.text_area("Write your animation idea here. Use simple words.", "Draw a blue circle and convert it to a red square", max_chars=240)
 
+openai_api_key=""
+openai_model=""
+
 if st.checkbox("Use own Open API Key (optional)"):
   openai_api_key = st.text_input("Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
   openai_model = st.selectbox("Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
