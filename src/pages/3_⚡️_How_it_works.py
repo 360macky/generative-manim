@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from PIL import Image
 
 st.title("⚡️ How it works")
@@ -26,9 +27,11 @@ But now, with GPT-3.5, we can do more.
 
 
 """)
+
+st.write(os.path.dirname(__file__) + "/blueprint.png")
             
-blueprint = Image.open("./blueprint.png")
-            
+blueprint = Image.open(os.path.dirname(__file__) + "/blueprint.png")
+
 st.image(blueprint, caption="Blueprint of Generative Manim", output_format="PNG")
 
 st.write("## Acknowledgements")
