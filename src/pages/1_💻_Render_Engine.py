@@ -13,13 +13,13 @@ generates_code = st.button(
     ":computer: Render video :sparkles:", type="primary")
 
 if generates_code:
-  class RenderedScene(Scene):
+  class GenScene(Scene):
     def construct(self):
       exec(code_response)
 
-  RenderedScene().render()
+  GenScene().render()
   try:
-    st.video("media/videos/1080p60.0/RenderedScene.mp4")
+    st.video("media/videos/1080p60.0/GenScene.mp4")
   except FileNotFoundError:
     st.error("Error: I couldn't find the generated video file. I know this is a bug and I'm working on it. Please reload the page.")
   except:
