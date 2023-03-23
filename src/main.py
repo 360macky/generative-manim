@@ -73,12 +73,22 @@ if generate_video:
           "Error: We couldn't authenticate your OpenAI API key. Please check if it's correct.")
       st.stop()
 
-  response = openai.ChatCompletion.create(
-      model=openai_model.lower(),
-      messages=[{"role": "system", "content": "Write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
-                {"role": "user", "content": f"New Animation Request: {prompt}"}],
-      max_tokens=300
-  )
+  try:
+    response = openai.ChatCompletion.create(
+        model=openai_model.lower(),
+        messages=[{"role": "system", "content": "Write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
+                  {"role": "user", "content": f"New Animation Request: {prompt}"}],
+        max_tokens=300
+    )
+  except:
+    if openai_model.lower() == "gpt-4":
+      st.error(
+          "Error: This is likely a rate limit error for GPT-4. Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means probably the generated code can't be executed, since OpenAI will reject that. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
+      st.stop()
+    else:
+      st.error(
+          "Error: We couldn't generate the generated code. Please reload the page, or try again later")
+      st.stop()
 
   code_response = remove_indentation(extract_construct_code(
       extract_code(response.choices[0].message.content)))
