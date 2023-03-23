@@ -29,3 +29,11 @@
 For more details, check out the [How it works](https://generative-manim.streamlit.app/%EF%B8%8F_How_it_works) section.
 
 ![Blueprint](./src/pages/blueprint.png)
+
+## 🤲 Contributing
+
+Generative Manim is an open source project.
+
+If you want to be the author of a new feature, fix a bug or contribute with something new.
+
+Fork the repository and make changes as you like. [Pull requests](https://github.com/360macky/project-name/pulls) are warmly welcome.
