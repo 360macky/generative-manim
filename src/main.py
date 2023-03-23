@@ -15,8 +15,6 @@ st.write(":robot_face: Create beautiful and quick animations with GPT-4 and GPT-
 prompt = st.text_area("Write your animation idea here. Use simple words.",
                       "Draw a blue circle and convert it to a red square", max_chars=240)
 
-st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests randomly. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
-
 openai_api_key = ""
 
 openai_model = st.selectbox(
@@ -25,6 +23,8 @@ openai_model = st.selectbox(
 if st.checkbox("Use own Open API Key (optional)"):
   openai_api_key = st.text_input(
       "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
+  
+st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests randomly. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
 
 generate_video = st.button(":computer: Animate :sparkles:", type="primary")
 show_code = st.checkbox("Show generated code (that produces the animation)")
