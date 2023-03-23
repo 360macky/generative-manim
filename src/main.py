@@ -15,14 +15,16 @@ st.write(":robot_face: Create beautiful and quick animations with GPT-4 and GPT-
 prompt = st.text_area("Write your animation idea here. Use simple words.",
                       "Draw a blue circle and convert it to a red square", max_chars=240)
 
+st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means probably the generated code can't be executed, since OpenAI will reject that. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
+
 openai_api_key = ""
-openai_model = ""
+
+openai_model = st.selectbox(
+    "Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
 
 if st.checkbox("Use own Open API Key (optional)"):
   openai_api_key = st.text_input(
       "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
-  openai_model = st.selectbox(
-      "Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
 
 generate_video = st.button(":computer: Animate :sparkles:", type="primary")
 show_code = st.checkbox("Show generated code (that produces the animation)")
@@ -67,7 +69,8 @@ if generate_video:
     try:
       openai.api_key = openai_api_key
     except:
-      st.error("Error: We couldn't authenticate your OpenAI API key. Please check if it's correct.")
+      st.error(
+          "Error: We couldn't authenticate your OpenAI API key. Please check if it's correct.")
       st.stop()
 
   response = openai.ChatCompletion.create(
