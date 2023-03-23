@@ -18,6 +18,9 @@
   <a href="https://generative-manim.streamlit.app">
     <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" />
   </a>
+  <a href="">
+    <img src="https://img.shields.io/static/v1?label=OpenAI%20API&message=GPT-4&color=000000&logo=openai&style=flat" />
+  </a>
 </p>
 
 ---
