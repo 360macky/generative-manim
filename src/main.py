@@ -15,7 +15,7 @@ st.write(":robot_face: Create beautiful and quick animations with GPT-4 and GPT-
 prompt = st.text_area("Write your animation idea here. Use simple words.",
                       "Draw a blue circle and convert it to a red square", max_chars=240)
 
-st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means probably the generated code can't be executed, since OpenAI will reject that. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
+st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests randomly. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
 
 openai_api_key = ""
 
@@ -83,7 +83,7 @@ if generate_video:
   except:
     if openai_model.lower() == "gpt-4":
       st.error(
-          "Error: This is likely a rate limit error for GPT-4. Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means probably the generated code can't be executed, since OpenAI will reject that. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
+          "Error: This is likely a rate limit error for GPT-4. Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests randomly. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
       st.stop()
     else:
       st.error(
