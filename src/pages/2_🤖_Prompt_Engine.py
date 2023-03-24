@@ -36,7 +36,7 @@ if generate_prompt:
 
   code_response = extract_code(response.choices[0].message.content)
 
-  code_response = remove_indentation(extract_construct_code(code_response))
+  code_response = extract_construct_code(code_response)
 
   st.text_area(label="Code generated: ",
                value=code_response,
