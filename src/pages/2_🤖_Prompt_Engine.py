@@ -35,9 +35,10 @@ if generate_prompt:
 
   response = openai.ChatCompletion.create(
       model=openai_model.lower(),
-      messages=[{"role": "system", "content": "You write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
-                {"role": "user", "content": f"New Animation Request: {prompt}"}],
-      max_tokens=300
+      messages=[
+          {"role": "system", "content": GPT_SYSTEM_INSTRUCTIONS},
+          {"role": "user", "content": wrap_prompt(prompt)}
+      ]
   )
 
   code_response = extract_code(response.choices[0].message.content)
