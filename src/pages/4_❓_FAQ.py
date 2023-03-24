@@ -3,7 +3,7 @@ import streamlit as st
 st.title("❓ FAQ")
 
 st.markdown("""
-If you have any other questions, please tell me at [Twitter](https://twitter.com/360macky)!
+If you have any other questions, please tell me at [Twitter](https://twitter.com/360macky)! I'll be happy to answer them.
 """)
 
 st.write("## How the future could be?")
@@ -24,7 +24,11 @@ st.write("Manim is a Python library for creating mathematical animations. It's o
 
 st.write("## What is GPT-3.5?")
 
-st.write("GPT-3.5 is the latest API-available version of OpenAI's GPT model. It's a language model behind ChatGPT. GPT-4 itself is not available as an API.")
+st.write("GPT-3.5 is the latest stable API-available version of OpenAI's GPT model. It's a language model behind ChatGPT.")
+
+st.write("## What is GPT-4?")
+
+st.write("GPT-4 is the latest (but unstable and limited) version of OpenAI's GPT model.")
 
 st.write("## What is the purpose of this app?")
 
