@@ -6,7 +6,7 @@ RUN apt update
 RUN apt -y upgrade
 RUN apt install -y libcairo2-dev
 RUN apt install -y ffmpeg
-RUN apt install -y texlive texlive-latex-extra texlive-fonts-extra texlive-latex-recommended texlive-science texlive-fonts-extra tipa
+RUN apt install -y texlive texlive-latex-extra texlive-fonts-extra texlive-latex-recommended texlive-science texlive-fonts-extra
 RUN apt install -y libpango1.0-dev pkg-config
 
 RUN pip install poetry
