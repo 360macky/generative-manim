@@ -1,4 +1,5 @@
 import os
+import subprocess
 import streamlit as st
 from manim import *
 import openai
@@ -136,10 +137,18 @@ if generate_video:
   try:
     with open("GenScene.py", "w") as f:
       f.write(create_file_content(code_response))
-    os.system(
-        "manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir")
   except:
-    st.error("Error: You did nothing wrong, apparently GPT generated code that Manim can't process. Please try again clicking on 'Animate' button. If the error persists, modify your prompt and try again.")
+    st.error("Error: We couldn't create the generated code in the Python file. Please reload the page, or try again later")
+    st.stop()
+
+  COMMAND_TO_RENDER = "manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir"
+
+  try:
+    working_dir = os.path.dirname(__file__) + "/../"
+    subprocess.run("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir", check=True, cwd=working_dir, shell=True)
+  except Exception as e:
+    st.error(f"""Error: Apparently GPT generated code that Manim can't render/process. Probably a syntax error... Don't worry, you can download the AI generated Python file with the button below. Please modify your prompt and try again.
+    """)
   try:
     video_file = open(os.path.dirname(__file__) + '/../GenScene.mp4', 'rb')
     video_bytes = video_file.read()
