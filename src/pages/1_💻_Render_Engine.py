@@ -2,7 +2,13 @@ import streamlit as st
 from manim import *
 import os
 import base64
+from PIL import Image
+
 from utils import *
+
+icon = Image.open(os.path.dirname(__file__) + '/../icon.png')
+
+st.set_page_config(page_icon=icon)
 
 styl = f"""
 <style>

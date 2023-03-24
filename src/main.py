@@ -3,12 +3,15 @@ import streamlit as st
 from manim import *
 import openai
 from openai.error import AuthenticationError
+from PIL import Image
 
 from utils import *
 
+icon = Image.open(os.path.dirname(__file__) + '/icon.png')
+
 st.set_page_config(
-    page_title="Generator",
-    page_icon="👋",
+  page_title="Generative Manim",
+  page_icon=icon,
 )
 
 styl = f"""

@@ -2,6 +2,10 @@ import streamlit as st
 import os
 from PIL import Image
 
+icon = Image.open(os.path.dirname(__file__) + '/../icon.png')
+
+st.set_page_config(page_icon=icon)
+
 st.title("⚡️ How it works")
 
 st.markdown("""

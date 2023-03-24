@@ -1,7 +1,13 @@
 import streamlit as st
+import os
 import openai
+from PIL import Image
 
 from utils import *
+
+icon = Image.open(os.path.dirname(__file__) + '/../icon.png')
+
+st.set_page_config(page_icon=icon)
 
 st.markdown('# 🤖 Prompt Engine')
 
