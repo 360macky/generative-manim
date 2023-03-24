@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 from manim import *
 import openai
