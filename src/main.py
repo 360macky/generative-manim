@@ -1,6 +1,7 @@
 import streamlit as st
 from manim import *
 import openai
+from openai.error import AuthenticationError
 
 from utils import *
 
@@ -87,6 +88,10 @@ if generate_video:
   else:
     try:
       openai.api_key = openai_api_key
+    except AuthenticationError:
+      st.error(
+          "Error: The OpenAI API key is invalid. Please check if it's correct.")
+      st.stop()
     except:
       st.error(
           "Error: We couldn't authenticate your OpenAI API key. Please check if it's correct.")
