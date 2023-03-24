@@ -55,7 +55,7 @@ if generates_code:
   code_response = add_indentation(code_response)
 
   with open("GenScene.py", "w") as f:
-    f.write(f"from manim import *\n\nclass GenScene(Scene):\n  def construct(self):\n{code_response}")
+    f.write(f"from manim import *\nfrom math import *\n\nclass GenScene(Scene):\n  def construct(self):\n{code_response}")
 
   os.system("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir")
 
