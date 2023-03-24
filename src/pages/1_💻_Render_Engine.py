@@ -2,6 +2,7 @@ import streamlit as st
 from manim import *
 import os
 import base64
+from utils import *
 
 styl = f"""
 <style>
@@ -53,9 +54,10 @@ if generates_code:
     os.remove(os.path.dirname(__file__) + '/../../GenScene.mp4')
 
   code_response = add_indentation(code_response)
+  code_file = create_file_content(code_response)
 
   with open("GenScene.py", "w") as f:
-    f.write(f"from manim import *\nfrom math import *\n\nclass GenScene(Scene):\n  def construct(self):\n{code_response}")
+    f.write(code_file)
 
   os.system("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir")
 
