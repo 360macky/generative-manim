@@ -28,7 +28,7 @@ st.write("GPT-3.5 is the latest stable API-available version of OpenAI's GPT mod
 
 st.write("## What is GPT-4?")
 
-st.write("GPT-4 is the latest (but unstable and limited) version of OpenAI's GPT model.")
+st.write("GPT-4 is the latest (but unstable and limited) version of OpenAI's GPT model. GPT-4 excels at tasks that require advanced reasoning, complex instruction understanding, and more creativity.")
 
 st.write("## What is the purpose of this app?")
 
