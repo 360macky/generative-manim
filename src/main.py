@@ -33,11 +33,11 @@ openai_api_key = ""
 openai_model = st.selectbox(
     "Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
 
-if st.checkbox("Use own Open API Key (optional)"):
+if st.checkbox("Use own Open API Key (recommended)"):
   openai_api_key = st.text_input(
       "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
 
-st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests randomly. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
+st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
 
 generate_video = st.button(":computer: Animate :sparkles:", type="primary")
 show_code = st.checkbox("Show generated code (that produces the animation)")
@@ -68,7 +68,7 @@ if generate_video:
 
   # If prompt exceeds 240 characters, it will be truncated
   if len(prompt) > 240 and not openai_api_key:
-    st.error("Error: Your prompt is longer than 240 characters. Please shorten it, or use your own API key.")
+    st.error("Error: Your prompt is longer than 240 characters. Please shorten it.")
     st.stop()
 
   # Prompt must be trimmed of spaces at the beginning and end
@@ -78,6 +78,12 @@ if generate_video:
   prompt = prompt.replace('"', '')
   prompt = prompt.replace("'", "")
   prompt = prompt.replace("\\", "")
+
+  # If user has their own API key, increase max tokens by 3x
+  if not openai_api_key:
+    max_tokens = 400
+  else:
+    max_tokens = 1200
 
   # If user has their own API key, use it
   if not openai_api_key:
@@ -101,9 +107,9 @@ if generate_video:
   try:
     response = openai.ChatCompletion.create(
         model=openai_model.lower(),
-        messages=[{"role": "system", "content": "Write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add comments. Do not use other library than Manim. Only complete the code block. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
+        messages=[{"role": "system", "content": "Write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add functions. Do not add comments. Do not use other library than Manim. Only complete the code block. At the end use 'self.play' ```from manim import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
                   {"role": "user", "content": f"New Animation Request: {prompt}"}],
-        max_tokens=300
+        max_tokens=max_tokens
     )
   except:
     if openai_model.lower() == "gpt-4":
