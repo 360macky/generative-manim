@@ -10,8 +10,8 @@ from utils import *
 icon = Image.open(os.path.dirname(__file__) + '/icon.png')
 
 st.set_page_config(
-  page_title="Generative Manim",
-  page_icon=icon,
+    page_title="Generative Manim",
+    page_icon=icon,
 )
 
 styl = f"""
