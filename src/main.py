@@ -45,13 +45,6 @@ show_code = st.checkbox("Show generated code (that produces the animation)")
 code_response = ""
 
 
-def add_indentation(string):
-  indented_string = ""
-  for line in string.splitlines():
-    indented_string += " " * 4 + line + "\n"
-  return indented_string
-
-
 if generate_video:
 
   if not openai_model:
@@ -107,8 +100,10 @@ if generate_video:
   try:
     response = openai.ChatCompletion.create(
         model=openai_model.lower(),
-        messages=[{"role": "system", "content": "Write Manim scripts for animations in Python. Generate code, not text. Do not explain code. Do not add functions. Do not add comments. Do not use other library than Manim. Only complete the code block. At the end use 'self.play' ```from manim import *\nfrom math import *\n\nclass GenScene(Scene):```\n  def construct(self):\n  # Write here"},
-                  {"role": "user", "content": f"New Animation Request: {prompt}"}],
+        messages=[
+            {"role": "system", "content": GPT_SYSTEM_INSTRUCTIONS},
+            {"role": "user", "content": wrap_prompt(prompt)}
+        ],
         max_tokens=max_tokens
     )
   except:
@@ -121,8 +116,8 @@ if generate_video:
           "Error: We couldn't generate the generated code. Please reload the page, or try again later")
       st.stop()
 
-  code_response = remove_indentation(extract_construct_code(
-      extract_code(response.choices[0].message.content)))
+  code_response = extract_construct_code(
+      extract_code(response.choices[0].message.content))
 
   if show_code:
     st.text_area(label="Code generated: ",
@@ -135,12 +130,9 @@ if generate_video:
   if os.path.exists(os.path.dirname(__file__) + '/../../GenScene.mp4'):
     os.remove(os.path.dirname(__file__) + '/../../GenScene.mp4')
 
-  code_response = add_indentation(code_response)
-
   try:
     with open("GenScene.py", "w") as f:
-      f.write(
-          f"from manim import *\nfrom math import *\n\nclass GenScene(Scene):\n  def construct(self):\n{code_response}")
+      f.write(create_file_content(code_response))
     os.system(
         "manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir")
   except:
