@@ -10,7 +10,6 @@ manim = "^0.10.0"
 streamlit = "^1.14.0"
 protobuf = "^3.20.0"
 openai = "^0.27.2"
-streamlit_ace = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
 
