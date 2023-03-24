@@ -5,7 +5,7 @@ description = ""
 authors = ["ash2shukla"]
 
 [tool.poetry.dependencies]
-python = "^3.9.8"
+python = ">=3.9.8,<3.11"
 manim = "^0.15.1"
 streamlit = "^1.14.0"
 protobuf = "^3.20.0"
