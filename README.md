@@ -39,6 +39,16 @@ Generative Manim is built with [Streamlit](https://streamlit.io). It uses [OpenA
 
 For more details, check out the [How it works](https://generative-manim.streamlit.app/%EF%B8%8F_How_it_works) section.
 
+### 📦 Installation
+
+Once you have cloned the repository, you need to install streamlit and set `OPENAI_API_KEY` as an environment variable in your system.
+
+To start the app, run:
+
+```
+streamlit run src/main.py
+```
+
 ## 🤲 Contributing
 
 Generative Manim is an open source project.
