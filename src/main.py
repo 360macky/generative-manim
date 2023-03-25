@@ -149,7 +149,7 @@ if generate_video:
     subprocess.run("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir", check=True, cwd=working_dir, shell=True)
   except Exception as e:
     problem_to_render = True
-    st.error(f"Error: Apparently GPT generated code that Manim (the render engine) can't process.\n\nThis is normal, since sometimes GPT can generate buggy code after all, and needs human intervention to fix it.\n\nOk. But what can you do now?\n\nYou still can download the AI generated Python file with the button below (the one that failed to render) if you want to know what failed internally.\n\nYou can modify your prompt and try again. Remember, simpler and clearer prompts are better.\n\nYou can open an issue on the [GitHub Repository](https://github.com/360macky/generative-manim), attaching your prompt.")
+    st.error(f"Error: Apparently GPT generated code that Manim (the render engine) can't process.\n\nThis is normal, since sometimes GPT can generate buggy code after all, and needs human intervention to fix it.\n\n**Ok. But what can you do now?**\n\nYou still can download the AI generated Python file with the button below (the one that failed to render) if you want to know what failed internally.\n\nYou can modify your prompt and try again. Remember, simpler and clearer prompts are better.\n\nYou can open an issue on the [GitHub Repository](https://github.com/360macky/generative-manim), attaching your prompt.")
   if not problem_to_render:
     try:
       video_file = open(os.path.dirname(__file__) + '/../GenScene.mp4', 'rb')
