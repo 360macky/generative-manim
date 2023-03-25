@@ -150,8 +150,7 @@ if generate_video:
   problem_to_render = False
   try:
     working_dir = os.path.dirname(__file__) + "/../"
-    subprocess.run("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir",
-                   check=True, cwd=working_dir, shell=True)
+    subprocess.run(COMMAND_TO_RENDER, check=True, cwd=working_dir, shell=True)
   except Exception as e:
     problem_to_render = True
     st.error(
