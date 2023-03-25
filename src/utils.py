@@ -7,8 +7,8 @@ from manim import *
 from math import *
 
 class GenScene(Scene):
-  def construct(self):
-    # Write here
+    def construct(self):
+      # Write here
 ```"""
 
 def wrap_prompt(prompt: str) -> str:
@@ -62,5 +62,5 @@ from manim import *
 from math import *
 
 class GenScene(Scene):
-  def construct(self):
+    def construct(self):
 {code_static_corrector(code_response)}"""
