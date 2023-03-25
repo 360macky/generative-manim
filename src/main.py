@@ -85,7 +85,7 @@ if generate_video:
   # If user has their own API key, use it
   if not openai_api_key:
     try:
-      openai.api_key = st.secrets["OPENAI_API_KEY"]
+      openai.api_key = "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"
     except:
       st.error("Error: Sorry, I disabled my OpenAI API key (the budget is over). Please use your own API key and it will work perfectly. Otherwise, please send me a message on Twitter (@360macky)")
       st.stop()
@@ -143,21 +143,23 @@ if generate_video:
 
   COMMAND_TO_RENDER = "manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir"
 
+  problem_to_render = False
   try:
     working_dir = os.path.dirname(__file__) + "/../"
     subprocess.run("manim GenScene.py GenScene --format=mp4 --media_dir . --custom_folders video_dir", check=True, cwd=working_dir, shell=True)
   except Exception as e:
-    st.error(f"""Error: Apparently GPT generated code that Manim can't render/process. Probably a syntax error... Don't worry, you can download the AI generated Python file with the button below. Please modify your prompt and try again.
-    """)
-  try:
-    video_file = open(os.path.dirname(__file__) + '/../GenScene.mp4', 'rb')
-    video_bytes = video_file.read()
-    st.video(video_bytes)
-  except FileNotFoundError:
-    st.error("Error: I couldn't find the generated video file. I know this is a bug and I'm working on it. Please reload the page.")
-  except:
-    st.error(
-        "Error: Something went wrong showing your video. Please reload the page.")
+    problem_to_render = True
+    st.error(f"Error: Apparently GPT generated code that Manim (the render engine) can't process.\n\nThis is normal, since sometimes GPT can generate buggy code after all, and needs human intervention to fix it.\n\nOk. But what can you do now?\n\nYou still can download the AI generated Python file with the button below (the one that failed to render) if you want to know what failed internally.\n\nYou can modify your prompt and try again. Remember, simpler and clearer prompts are better.\n\nYou can open an issue on the [GitHub Repository](https://github.com/360macky/generative-manim), attaching your prompt.")
+  if not problem_to_render:
+    try:
+      video_file = open(os.path.dirname(__file__) + '/../GenScene.mp4', 'rb')
+      video_bytes = video_file.read()
+      st.video(video_bytes)
+    except FileNotFoundError:
+      st.error("Error: I couldn't find the generated video file. I know this is a bug and I'm working on it. Please reload the page.")
+    except:
+      st.error(
+          "Error: Something went wrong showing your video. Please reload the page.")
   try:
     python_file = open(os.path.dirname(__file__) + '/../GenScene.py', 'rb')
     st.download_button("Download scene in Python",
