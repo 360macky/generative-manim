@@ -85,7 +85,7 @@ if generate_video:
   # If user has their own API key, use it
   if not openai_api_key:
     try:
-      openai.api_key = "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"
+      openai.api_key = st.secrets["OPENAI_API_KEY"]
     except:
       st.error("Error: Sorry, I disabled my OpenAI API key (the budget is over). Please use your own API key and it will work perfectly. Otherwise, please send me a message on Twitter (@360macky)")
       st.stop()
