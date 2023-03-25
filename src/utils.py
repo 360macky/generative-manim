@@ -8,7 +8,7 @@ from math import *
 
 class GenScene(Scene):
     def construct(self):
-      # Write here
+        # Write here
 ```"""
 
 def wrap_prompt(prompt: str) -> str:
