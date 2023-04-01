@@ -49,7 +49,9 @@ While GPT-3.5 and GPT-4 are able to generate good code. They have the following 
 
 ## Costs implications
 
-Currently GPT-4 is 30 times more expensive than GPT-3.5. That means that a 1000 tokens text will cost $30. That's a lot of money. But it's not that much if you think about the possibilities.
+Currently GPT-4 is 30 times more expensive than GPT-3.5.
+
+[GPT-4 costs 3 (input) to 6 (generated) cents for 1000 tokens, which is around 1 million tokens for $30](https://github.com/360macky/generative-manim/issues/2). That's a lot of money. But it's not that much if you think about the possibilities.
 
 I would recommend you to use your own API Key if you want to use this app without character limits.
 
