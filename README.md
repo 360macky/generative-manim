@@ -28,13 +28,13 @@
 
 ## 🚀 Concept
 
-**Generative Manim** is a suite of tools that allows you to create videos with Manim using LLMs (Large Language Models) like GPT-4. The idea is to make the process of creating videos more accessible to everyone.
+**Generative Manim** (GM) is a suite of tools that allows you to create videos with Manim using LLMs (Large Language Models) like GPT-4. The idea is to make the process of creating videos more accessible to everyone.
 
 It began as a prototype of a web app that uses [GPT-4](https://openai.com/research/gpt-4) to generate videos with [Manim](https://www.manim.community). The idea behind this project is taking advantage of the power of GPT-4 in programming, the understanding of human language and the animation capabilities of Manim to generate a tool that could be used by anyone to create videos. Regardless of their programming or video editing skills.
 
 ## 🎒 Streamlit
 
-Integration of the Generative Manim with Streamlit. Streamlit is an open-source app framework for Machine Learning and Data Science projects. It allows you to create interactive web apps for your projects with minimal effort.
+Integration of the GM with Streamlit. Streamlit is an open-source app framework for Machine Learning and Data Science projects. It allows you to create interactive web apps for your projects with minimal effort.
 
 ### 🛠 Core Development
 
@@ -50,7 +50,7 @@ For more details, check out the [How it works](https://generative-manim.streamli
 
 ## 💬 REST API
 
-🏗️ Integration as a **REST API** in progress.
+In `/api/app.py` you can find the REST API. Currently the available endpoint is `/zero-shot-learning`, which is the legacy basic system-prompt concept of the project.
 
 ## 🦜 LangChain
 
