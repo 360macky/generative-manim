@@ -6,3 +6,10 @@ openai==1.2.3
 manim==0.15.1
 google-cloud-storage==2.10.0
 python-dotenv==1.0.0
+bs4==0.0.1
+langchain==0.1.16
+langchain_community==0.0.34
+langchain-openai==0.1.3
+langchain-anthropic==0.1.11
+langgraph==0.0.38
+anthropic==0.25.6
