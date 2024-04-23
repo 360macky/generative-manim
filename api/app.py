@@ -14,8 +14,19 @@ def hello_world():
     return "GM API"
 
 
+@app.route("/langgraph", methods=["POST"])
+def langgraph():
+    """
+    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/langgraph
+    """
+    return jsonify({"message": "To be implemented"}), 200
+
+
 @app.route("/zero-shot-learning", methods=["POST"])
 def zero_shot_learning():
+    """
+    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/zero-shot-learning
+    """
     text = request.json.get("text")
     prompt = f"Generate python code for the following text:\n\n{text}"
     client = OpenAI()
@@ -37,7 +48,7 @@ class GenScene(Scene):
         ],
     )
     
-    code = response.choices[0].message
+    code = response.choices[0].message.content
     return jsonify({"code": code}), 200
 
 
