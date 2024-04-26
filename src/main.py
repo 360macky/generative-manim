@@ -37,11 +37,6 @@ openai_api_key = ""
 openai_model = st.selectbox(
     "Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
 
-if st.checkbox("Use own Open API Key (recommended)"):
-  openai_api_key = st.text_input(
-      "Paste your own [Open API Key](https://platform.openai.com/account/api-keys)", value="", type="password")
-
-st.write(":warning: Currently OpenAI accepts 25 requests every 3 hours for GPT-4. This means OpenAI will start rejecting some requests. There are two solutions: Use GPT-3.5-Turbo, or use your own OpenAI API key.")
 
 generate_video = st.button(":computer: Animate :sparkles:", type="primary")
 show_code = st.checkbox("Show generated code (that produces the animation)")
@@ -75,11 +70,7 @@ if generate_video:
   prompt = prompt.replace("'", "")
   prompt = prompt.replace("\\", "")
 
-  # If user has their own API key, increase max tokens by 3x
-  if not openai_api_key:
-    max_tokens = 400
-  else:
-    max_tokens = 1200
+  max_tokens = 1200 
 
   # If user has their own API key, use it
   if not openai_api_key:
