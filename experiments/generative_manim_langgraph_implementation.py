@@ -12,7 +12,11 @@ Taking the example of [Code generation with flow](https://github.com/langchain-a
 """
 
 """## Extracting examples from Manim docs"""
+# Load .env
+from dotenv import load_dotenv
+load_dotenv()
 
+import os
 from bs4 import BeautifulSoup as Soup
 from langchain_community.document_loaders.recursive_url_loader import RecursiveUrlLoader
 
@@ -55,11 +59,11 @@ class code(BaseModel):
     code: str = Field(description="Code block not including import statements")
     description = "Schema for code solutions to requests on code for Manim Animations."
 
-from google.colab import userdata
+
 import anthropic
 
-OPENAI_API_KEY = userdata.get('OPENAI_API_KEY')
-anthropic.api_key = userdata.get('ANTHROPIC_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+anthropic.api_key = os.getenv('ANTHROPIC_API_KEY')
 
 expt_llm = "gpt-4-0125-preview"
 llm = ChatOpenAI(temperature=0, model=expt_llm, openai_api_key=OPENAI_API_KEY)
@@ -104,29 +108,7 @@ llm = ChatAnthropic(
 
 structured_llm_claude = llm.with_structured_output(code, include_raw=True)
 
-# Optional: Check for errors in case tool use is flaky
-def check_claude_output(tool_output):
-    """Check for parse error or failure to call the tool"""
-
-    # Error with parsing
-    if tool_output["parsing_error"]:
-        # Report back output and parsing errors
-        print("Parsing error!")
-        raw_output = str(code_output["raw"].content)
-        error = tool_output["parsing_error"]
-        raise ValueError(
-            f"Error parsing your output! Be sure to invoke the tool. Output: {raw_output}. \n Parse error: {error}"
-        )
-
-    # Tool was not invoked
-    elif not tool_output["parsed"]:
-        print("Failed to invoke tool!")
-        raise ValueError(
-            f"You did not use the provided tool! Be sure to invoke the tool to structure the output."
-        )
-    return tool_output
-
-code_chain_claude_raw = code_gen_prompt_claude | structured_llm_claude | check_claude_output
+code_chain_claude_raw = code_gen_prompt_claude | structured_llm_claude
 
 def insert_errors(inputs):
     """Insert errors for tool parsing in the messages"""
