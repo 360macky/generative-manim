@@ -35,7 +35,10 @@ prompt = st.text_area("Write your animation idea here. Use simple words.",
 openai_api_key = ""
 
 openai_model = st.selectbox(
-    "Select the GPT model. If you don't have access to GPT-4, select GPT-3.5-Turbo", ["GPT-3.5-Turbo", "GPT-4"])
+    "Select the GPT model.", ["GPT-3.5-Turbo", "GPT-4"])
+
+animation_model = st.selectbox(
+    "Select the animation model.", ["Zero Shot Model", "LangGraph Model"])
 
 
 generate_video = st.button(":computer: Animate :sparkles:", type="primary")
