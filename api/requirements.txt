@@ -2,7 +2,7 @@ flask==2.2.2
 gunicorn==20.1.0
 werkzeug==2.3.7
 ffmpeg==1.4
-openai==1.2.3
+openai==1.16.2
 manim==0.15.1
 google-cloud-storage==2.10.0
 python-dotenv==1.0.0
