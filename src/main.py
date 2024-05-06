@@ -2,8 +2,7 @@ import os
 import subprocess
 import streamlit as st
 from manim import *
-import openai
-from openai.error import AuthenticationError
+from openai import OpenAI
 from PIL import Image
 
 from utils import *
@@ -87,26 +86,15 @@ if generate_video:
     except:
       st.error("Error: Sorry, I disabled my OpenAI API key (the budget is over). Please use your own API key and it will work perfectly. Otherwise, please send me a message on Twitter (@360macky)")
       st.stop()
-  else:
-    try:
-      openai.api_key = openai_api_key
-    except AuthenticationError:
-      st.error(
-          "Error: The OpenAI API key is invalid. Please check if it's correct.")
-      st.stop()
-    except:
-      st.error(
-          "Error: We couldn't authenticate your OpenAI API key. Please check if it's correct.")
-      st.stop()
 
   try:
-    response = openai.ChatCompletion.create(
+    client = OpenAI(api_key=openai_api_key)
+    response = client.chat.completions.create(
         model=openai_model.lower(),
         messages=[
             {"role": "system", "content": GPT_SYSTEM_INSTRUCTIONS},
             {"role": "user", "content": wrap_prompt(prompt)}
-        ],
-        max_tokens=max_tokens
+        ]
     )
   except:
     if openai_model.lower() == "gpt-4":
@@ -120,6 +108,11 @@ if generate_video:
 
   code_response = extract_construct_code(
       extract_code(response.choices[0].message.content))
+
+  # If code_response is empty, show an error
+  if not code_response:
+    st.error("Error: We couldn't generate the generated code. Please reload the page, or try again later")
+    st.stop()
 
   if show_code:
     st.text_area(label="Code generated: ",
