@@ -21,3 +21,7 @@ Now, the structure we need to follow is to create a dataset with the following c
 - `type`: Type of media (`video`, `image`).
 
 Altough we are focused on video generation, we should also consider images as a type of media, in order to train the model with vast examples that can be used in different scenarios.
+
+- [*] Extract code examples from the Manim community.
+- [ ] Tag each code example with the corresponding type of media (if it uses `self.add`, it is an image, if it uses `self.play`, it is a video).
+- [ ] Write a prompt for each code example.
