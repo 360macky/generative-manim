@@ -1,0 +1,1 @@
+Create a 5-second video illustrating the concept of argmin. Show the function f(x) = 2(x - 5)^2 with a dot starting at x = 0 and moving to the minimum point at x = 5 . Include labeled x and y axes. Use a black background.
