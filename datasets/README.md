@@ -1,4 +1,4 @@
-# Generative Manim Datasets
+# Generative Manim Datasets & Data Collection Pipeline
 
 Some of the techniques to create better prompt-to-code Manim models will need a guide for training. In order to achieve that we need to compile a dataset of prompts and the corresponding code.
 
@@ -28,7 +28,21 @@ Altough we are focused on video generation, we should also consider images as a 
 - [ ] Tag each code example with the corresponding type of media (if it uses `self.add`, it is an image, if it uses `self.play`, it is a video).
 - [ ] Write a prompt for each code example.
 
+#### Dataset Generation Pipeline
+
+> 💡 Using the code as the prompt word to generate the prompt text, in other words: let GPT summarize the manim code, the quality is better
+
+Instead of relying on humans to write the prompt, we can also generate the prompt from the code itself via GPT models. This way we can have a more consistent dataset.
+
+- [ ] Create a Python script to generate the prompt from the code available in the scripts of `/code`.
+- [ ] Create a JSONL file with the dataset generated.
+
 ### Dataset from `Edoh`
+
+We can also use the dataset from `Edoh` to create a dataset of prompts and code.
+
+- [x] Create Python script to extract the dataset from `Edoh` dataset.
+- [x] Create JSONL file with the dataset.
 
 Extracting the dataset of prompts and code from the [Edoh Manim Python](https://huggingface.co/datasets/Edoh/manim_python) dataset we got `edoh-dataset.jsonl`.
 
