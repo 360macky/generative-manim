@@ -2,3 +2,4 @@ __pycache__/
 partial_movie_files/
 test.py
 temp_files/
+datasets/promit/API_Key.cfg
