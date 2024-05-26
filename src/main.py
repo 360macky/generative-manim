@@ -2,7 +2,6 @@ import os
 import subprocess
 import streamlit as st
 from manim import *
-from openai import OpenAI
 from PIL import Image
 
 from utils import *
