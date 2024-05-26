@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 from subprocess import run, PIPE, Popen, CalledProcessError
 import threading
-from openai import OpenAI
 
 load_dotenv()
 app = Flask(__name__)
