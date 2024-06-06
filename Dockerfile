@@ -1,20 +1,22 @@
-FROM python:3.8.0
+# Use an official lightweight Python image.
+FROM python:3.9-slim
 
+# Set the working directory to /app
 WORKDIR /app
 
-RUN apt update
-RUN apt -y upgrade
-RUN apt install -y libcairo2-dev
-RUN apt install -y ffmpeg
-RUN apt install -y texlive texlive-latex-extra texlive-fonts-extra texlive-latex-recommended texlive-science texlive-fonts-extra
-RUN apt install -y libpango1.0-dev pkg-config
+# Preparing Manim dependencies and build tools
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install -y build-essential libcairo2-dev libpango1.0-dev pkg-config ffmpeg curl \
+    texlive texlive-latex-extra texlive-fonts-extra texlive-latex-recommended texlive-science
 
-RUN pip install poetry
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-COPY pyproject.toml /app/pyproject.toml
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN poetry install
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
-COPY src /app/src
-
-CMD ["poetry", "run", "streamlit", "run", "/app/src/Generator.py"]
+# Run app.py when the container launches
+CMD ["python", "app.py"]
