@@ -1,8 +1,14 @@
 import os
+import time
+from subprocess import run, PIPE, Popen, CalledProcessError
+import subprocess
+import urllib.parse
+import requests
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
-from subprocess import run, PIPE, Popen, CalledProcessError
+from azure.storage.blob import BlobServiceClient
 import threading
+from openai import OpenAI
 
 load_dotenv()
 app = Flask(__name__)
@@ -10,7 +16,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "GM API"
+    return "Generative Manim API"
 
 
 @app.route("/langgraph", methods=["POST"])
@@ -46,9 +52,28 @@ class GenScene(Scene):
             {"role": "user", "content": prompt},
         ],
     )
-    
+
     code = response.choices[0].message.content
     return jsonify({"code": code}), 200
+
+
+def upload_to_azure_storage(file_path, video_storage_file_name):
+    cloud_file_name = f"{video_storage_file_name}.mp4"
+
+    connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+    container_name = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
+    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    blob_client = blob_service_client.get_blob_client(
+        container=container_name, blob=cloud_file_name
+    )
+
+    # Upload the video file
+    with open(file_path, "rb") as data:
+        blob_client.upload_blob(data, overwrite=True)
+
+    # Construct the URL of the uploaded blob
+    blob_url = f"https://{blob_service_client.account_name}.blob.core.windows.net/{container_name}/{cloud_file_name}"
+    return blob_url
 
 
 @app.route("/code-to-video", methods=["POST"])
@@ -60,6 +85,8 @@ def code_to_video():
     file_name = request.json.get("file_name")
     file_class = request.json.get("file_class")
     iteration = request.json.get("iteration")
+    aspect_ratio = request.json.get("aspect_ratio")
+
     video_storage_file_name = f"video-{iteration}"
 
     if not code:
@@ -87,9 +114,16 @@ def code_to_video():
 
         # Wait for the subprocess to finish and capture stdout and stderr
         stdout, stderr = process.communicate()
+
         if process.returncode == 0:
             print("Video created")
-            return jsonify({"message": "Video generation completed"})
+            video_file_path = os.path.join("GenScene.mp4")
+            video_url = upload_to_azure_storage(
+                video_file_path, video_storage_file_name
+            )
+            return jsonify(
+                {"message": "Video generation completed", "video_url": video_url}
+            )
         else:
             print(f"Manim command failed with return code {process.returncode}")
             print(f"stdout: {stdout.decode()}")
@@ -108,4 +142,4 @@ def code_to_video():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(debug=False, host="0.0.0.0", port=port)

@@ -14,3 +14,7 @@ langchain-anthropic==0.1.11
 langgraph==0.0.38
 anthropic==0.25.6
 qianfan==0.3.11
+google-cloud-logging==3.10.0
+flask-cors==3.0.10
+azure-storage-blob==12.18.2
+azure-monitor-opentelemetry==1.4.2
