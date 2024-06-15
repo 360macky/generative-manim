@@ -32,6 +32,17 @@
 
 It began as a prototype of a web app that uses [GPT-4](https://openai.com/research/gpt-4) to generate videos with [Manim](https://www.manim.community). The idea behind this project is taking advantage of the power of GPT-4 in programming, the understanding of human language and the animation capabilities of Manim to generate a tool that could be used by anyone to create videos. Regardless of their programming or video editing skills.
 
+## 💻 Models
+
+**Models** are the core of Generative Manim. A model is a way to convert text to code, that can later be rendered in a video.
+
+| Name                  | Description                                                    | Engine  | Phase        |
+| --------------------- | -------------------------------------------------------------- | ------- | ------------ |
+| GM GPT-4o             | Latest GPT model from OpenAI powered by a custom System Prompt | GPT-4o  | ✅ Completed |
+| GM GPT-3.5 Fine Tuned | First Fine-tuned model of GPT-3.5                              | GPT-3.5 | ✅ Completed |
+
+If you want to suggest a new model, please open an issue in the [repository](https://github.com/360macky/generative-manim/issues) or talk with us in our [Discord server](https://discord.gg/HkbYEGybGv).
+
 ## 🎒 Streamlit
 
 Integration of the GM with Streamlit. Streamlit is an open-source app framework for Machine Learning and Data Science projects. It allows you to create interactive web apps for your projects with minimal effort.
@@ -44,27 +55,13 @@ Generative Manim is built with [Streamlit](https://streamlit.io). It uses [OpenA
 
 For more details, check out the [How it works](https://generative-manim.streamlit.app/%EF%B8%8F_How_it_works) section.
 
-## 🤖 Chatbot Platform
-
-🏗️ Integration as a chatbot in progress.
-
 ## 💬 REST API
 
 In `/api/app.py` you can find the REST API. Currently the available endpoint is `/zero-shot-learning`, which is the legacy basic system-prompt concept of the project.
 
-## 🦜 LangChain
+## ✨ Sponsors
 
-🏗️ Integration with **LangChain** in progress.
-
-#### 📦 Installation
-
-Once you have cloned the repository, you need to install streamlit and set `OPENAI_API_KEY` as an environment variable in your system.
-
-To start the app, run:
-
-```
-streamlit run src/main.py
-```
+**Generative Manim** is currently sponsored by **The Astronomical Software Company**.
 
 ## 🤲 Contributing
 
@@ -72,4 +69,4 @@ Generative Manim is an open source project.
 
 If you want to be the author of a new feature, fix a bug or contribute with something new.
 
-Fork the repository and make changes as you like. [Pull requests](https://github.com/360macky/generative-manim/pulls) are warmly welcome. Remember you can also join our [Discord server](https://discord.gg/FG8BAcdE) to discuss new features, bugs or any other topic.
+Fork the repository and make changes as you like. [Pull requests](https://github.com/360macky/generative-manim/pulls) are warmly welcome. Remember you can also join our [Discord server](https://discord.gg/HkbYEGybGv) to discuss new features, bugs or any other topic.
