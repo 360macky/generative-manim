@@ -36,10 +36,13 @@ It began as a prototype of a web app that uses [GPT-4](https://openai.com/resear
 
 **Models** are the core of Generative Manim. A model is a way to convert text to code, that can later be rendered in a video.
 
-| Name                  | Description                                                    | Engine  | Phase        |
-| --------------------- | -------------------------------------------------------------- | ------- | ------------ |
-| GM GPT-4o             | Latest GPT model from OpenAI powered by a custom System Prompt | GPT-4o  | ✅ Completed |
-| GM GPT-3.5 Fine Tuned | First Fine-tuned model of GPT-3.5                              | GPT-3.5 | ✅ Completed |
+| Name                  | Description                                                    | Engine                   | Phase |
+| --------------------- | -------------------------------------------------------------- | ------------------------ | ----- |
+| GM GPT-4o             | Latest GPT model from OpenAI powered by a custom System Prompt | GPT-4o                   | ✅    |
+| GM GPT-3.5 Fine Tuned | First Fine-tuned model of GPT-3.5                              | GPT-3.5                  | ✅    |
+| GM Claude Sonnet      | Claude model from Sonnet adapted with our custom System Prompt | claude-3-sonnet-20240229 | 🏗️    |
+
+### 📡 New Models
 
 If you want to suggest a new model, please open an issue in the [repository](https://github.com/360macky/generative-manim/issues) or talk with us in our [Discord server](https://discord.gg/HkbYEGybGv).
 

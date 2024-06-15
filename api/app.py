@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 import threading
 from openai import OpenAI
+import anthropic
 
 load_dotenv()
 app = Flask(__name__)
@@ -25,21 +26,18 @@ def generate_code():
     prompt_content = body.get("prompt", "")
     model = body.get("model", "gpt-4o")
 
-    openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-    # General system prompt for OpenAI
     general_system_prompt = """
 You are an assistant that knows about Manim. Manim is a mathematical animation engine that is used to create videos programmatically.
-    
+
 The following is an example of the code:
 \`\`\`
 from manim import *
 from math import *
 
 class GenScene(Scene):
-    def construct(self):
-        c = Circle(color=BLUE)
-        self.play(Create(c))
+def construct(self):
+    c = Circle(color=BLUE)
+    self.play(Create(c))
 
 \`\`\`
 
@@ -50,28 +48,47 @@ class GenScene(Scene):
 4. Do not explain the code, only the code.
     """
 
-    # Create the messages array with the system prompt and user message
-    messages = [
-        {"role": "system", "content": general_system_prompt},
-        {"role": "user", "content": prompt_content}
-    ]
+    if model.startswith("claude-"):
+        client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        messages = [{"role": "user", "content": prompt_content}]
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=1000,
+                temperature=0.2,
+                system=general_system_prompt,
+                messages=messages,
+            )
 
-    try:
-        # Ask OpenAI for a chat completion given the prompt
-        response = openai.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.2,
-        )
+            # Extract the text content from the response
+            code = "".join(block.text for block in response.content)
 
-        # Convert the response into a friendly text-stream
-        code = response.choices[0].message.content
+            return jsonify({"code": code})
 
-        # Respond with the stream
-        return jsonify({"code": code})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    else:
+        openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+        messages = [
+            {"role": "system", "content": general_system_prompt},
+            {"role": "user", "content": prompt_content},
+        ]
+
+        try:
+            response = openai.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.2,
+            )
+
+            code = response.choices[0].message.content
+
+            return jsonify({"code": code})
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 
 @app.route("/langgraph", methods=["POST"])
