@@ -19,6 +19,61 @@ def hello_world():
     return "Generative Manim API"
 
 
+@app.route("/generate-code", methods=["POST"])
+def generate_code():
+    body = request.json
+    prompt_content = body.get("prompt", "")
+    model = body.get("model", "gpt-4o")
+
+    openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+    # General system prompt for OpenAI
+    general_system_prompt = """
+You are an assistant that knows about Manim. Manim is a mathematical animation engine that is used to create videos programmatically.
+    
+The following is an example of the code:
+\`\`\`
+from manim import *
+from math import *
+
+class GenScene(Scene):
+    def construct(self):
+        c = Circle(color=BLUE)
+        self.play(Create(c))
+
+\`\`\`
+
+# Rules
+1. Always use GenScene as the class name, otherwise, the code will not work.
+2. Always use self.play() to play the animation, otherwise, the code will not work.
+3. Do not use text to explain the code, only the code.
+4. Do not explain the code, only the code.
+    """
+
+    # Create the messages array with the system prompt and user message
+    messages = [
+        {"role": "system", "content": general_system_prompt},
+        {"role": "user", "content": prompt_content}
+    ]
+
+    try:
+        # Ask OpenAI for a chat completion given the prompt
+        response = openai.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.2,
+        )
+
+        # Convert the response into a friendly text-stream
+        code = response.choices[0].message.content
+
+        # Respond with the stream
+        return jsonify({"code": code})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @app.route("/langgraph", methods=["POST"])
 def langgraph():
     """
