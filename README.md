@@ -45,7 +45,7 @@ It began as a prototype of a web app that uses [GPT-4](https://openai.com/resear
 | --------------------- | -------------------------------------------------------------- | ------------------------ | ----- |
 | GM GPT-4o             | Latest GPT model from OpenAI powered by a custom System Prompt | GPT-4o                   | ✅    |
 | GM GPT-3.5 Fine Tuned | First Fine-tuned model of GPT-3.5                              | GPT-3.5                  | ✅    |
-| GM Claude Sonnet      | Claude model from Sonnet adapted with our custom System Prompt | claude-3-sonnet-20240229 | 🏗️    |
+| GM Claude Sonnet      | Claude model from Sonnet adapted with our custom System Prompt | claude-3-sonnet-20240229 | ✅    |
 
 ### 📡 New Models
 
