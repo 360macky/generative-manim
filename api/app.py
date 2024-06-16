@@ -1,3 +1,7 @@
+"""
+GM (Generative Manim) API is licensed under the Apache License, Version 2.0
+"""
+
 import os
 import time
 from subprocess import run, PIPE, Popen, CalledProcessError
@@ -69,15 +73,14 @@ def construct(self):
             return jsonify({"error": str(e)}), 500
 
     else:
-        openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         messages = [
             {"role": "system", "content": general_system_prompt},
             {"role": "user", "content": prompt_content},
         ]
 
         try:
-            response = openai.chat.completions.create(
+            response = client.chat.completions.create(
                 model=model,
                 messages=messages,
                 temperature=0.2,
@@ -89,44 +92,6 @@ def construct(self):
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
-
-
-@app.route("/langgraph", methods=["POST"])
-def langgraph():
-    """
-    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/langgraph
-    """
-    return jsonify({"message": "To be implemented"}), 200
-
-
-@app.route("/zero-shot-learning", methods=["POST"])
-def zero_shot_learning():
-    """
-    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/zero-shot-learning
-    """
-    text = request.json.get("text")
-    prompt = f"Generate python code for the following text:\n\n{text}"
-    client = OpenAI()
-    GPT_SYSTEM_INSTRUCTIONS = """Write Manim scripts for animations in Python. Generate code, not text. Never explain code. Never add functions. Never add comments. Never infinte loops. Never use other library than Manim/math. Only complete the code block. Use variables with length of maximum 2 characters. At the end use 'self.play'.
-
-```
-from manim import *
-from math import *
-
-class GenScene(Scene):
-    def construct(self):
-        # Write here
-```"""
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": GPT_SYSTEM_INSTRUCTIONS},
-            {"role": "user", "content": prompt},
-        ],
-    )
-
-    code = response.choices[0].message.content
-    return jsonify({"code": code}), 200
 
 
 def upload_to_azure_storage(file_path, video_storage_file_name):
