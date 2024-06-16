@@ -28,9 +28,14 @@
 
 ## 🚀 Concept
 
-**Generative Manim** (GM) is a suite of tools that allows you to create videos with Manim using LLMs (Large Language Models) like GPT-4. The idea is to make the process of creating videos more accessible to everyone.
+**Generative Manim** (GM) is a suite of tools that allows you to create videos with Manim using LLMs (Large Language Models) like GPT-4 or Claude. The idea is to enable anyone to create wonderful animations from text ✨.
 
-It began as a prototype of a web app that uses [GPT-4](https://openai.com/research/gpt-4) to generate videos with [Manim](https://www.manim.community). The idea behind this project is taking advantage of the power of GPT-4 in programming, the understanding of human language and the animation capabilities of Manim to generate a tool that could be used by anyone to create videos. Regardless of their programming or video editing skills.
+It began as a prototype of a web app that uses [GPT-4](https://openai.com/research/gpt-4) to generate videos with [Manim](https://www.manim.community). The idea behind this project is taking advantage of the power of LLMs in programming, the understanding of human language and the animation capabilities of Manim to generate a tool that could be used by anyone to create videos. Regardless of their programming or video editing skills.
+
+- 🖐️ [Generative Manim Demo](https://generative-manim.vercel.app/): Check out the demo of Generative Manim!
+- 🔬 [Generative Manim API](https://github.com/360macky/generative-manim/tree/main/api): Build over the Animation Processing Interface, or API.
+- 🧑‍💻 [Generative Manim Developers](https://discord.gg/HkbYEGybGv): Join our Discord server, learn new things, share your creations and more!
+- 🍎 [Generative Manim Streamlit (Legacy)](https://github.com/360macky/generative-manim/tree/main/streamlit): First LLM exploration of LLMs and Animation.
 
 ## 💻 Models
 
@@ -45,22 +50,6 @@ It began as a prototype of a web app that uses [GPT-4](https://openai.com/resear
 ### 📡 New Models
 
 If you want to suggest a new model, please open an issue in the [repository](https://github.com/360macky/generative-manim/issues) or talk with us in our [Discord server](https://discord.gg/HkbYEGybGv).
-
-## 🎒 Streamlit
-
-Integration of the GM with Streamlit. Streamlit is an open-source app framework for Machine Learning and Data Science projects. It allows you to create interactive web apps for your projects with minimal effort.
-
-### 🛠 Core Development
-
-Generative Manim is built with [Streamlit](https://streamlit.io). It uses [OpenAI API](https://platform.openai.com/docs/api-reference/introduction) to make requests to GPT-4 and GPT-3.5-turbo.
-
-![Blueprint](./src/pages/blueprint.png)
-
-For more details, check out the [How it works](https://generative-manim.streamlit.app/%EF%B8%8F_How_it_works) section.
-
-## 💬 REST API
-
-In `/api/app.py` you can find the REST API. Currently the available endpoint is `/zero-shot-learning`, which is the legacy basic system-prompt concept of the project.
 
 ## ✨ Sponsors
 
