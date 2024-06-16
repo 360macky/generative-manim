@@ -1,3 +1,7 @@
+"""
+GM (Generative Manim) API is licensed under the Apache License, Version 2.0
+"""
+
 import os
 import time
 from subprocess import run, PIPE, Popen, CalledProcessError
@@ -9,6 +13,7 @@ from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 import threading
 from openai import OpenAI
+import anthropic
 
 load_dotenv()
 app = Flask(__name__)
@@ -25,21 +30,18 @@ def generate_code():
     prompt_content = body.get("prompt", "")
     model = body.get("model", "gpt-4o")
 
-    openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-    # General system prompt for OpenAI
     general_system_prompt = """
 You are an assistant that knows about Manim. Manim is a mathematical animation engine that is used to create videos programmatically.
-    
+
 The following is an example of the code:
 \`\`\`
 from manim import *
 from math import *
 
 class GenScene(Scene):
-    def construct(self):
-        c = Circle(color=BLUE)
-        self.play(Create(c))
+def construct(self):
+    c = Circle(color=BLUE)
+    self.play(Create(c))
 
 \`\`\`
 
@@ -50,66 +52,46 @@ class GenScene(Scene):
 4. Do not explain the code, only the code.
     """
 
-    # Create the messages array with the system prompt and user message
-    messages = [
-        {"role": "system", "content": general_system_prompt},
-        {"role": "user", "content": prompt_content}
-    ]
+    if model.startswith("claude-"):
+        client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        messages = [{"role": "user", "content": prompt_content}]
+        try:
+            response = client.messages.create(
+                model=model,
+                max_tokens=1000,
+                temperature=0.2,
+                system=general_system_prompt,
+                messages=messages,
+            )
 
-    try:
-        # Ask OpenAI for a chat completion given the prompt
-        response = openai.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.2,
-        )
+            # Extract the text content from the response
+            code = "".join(block.text for block in response.content)
 
-        # Convert the response into a friendly text-stream
-        code = response.choices[0].message.content
+            return jsonify({"code": code})
 
-        # Respond with the stream
-        return jsonify({"code": code})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    else:
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        messages = [
+            {"role": "system", "content": general_system_prompt},
+            {"role": "user", "content": prompt_content},
+        ]
 
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.2,
+            )
 
-@app.route("/langgraph", methods=["POST"])
-def langgraph():
-    """
-    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/langgraph
-    """
-    return jsonify({"message": "To be implemented"}), 200
+            code = response.choices[0].message.content
 
+            return jsonify({"code": code})
 
-@app.route("/zero-shot-learning", methods=["POST"])
-def zero_shot_learning():
-    """
-    curl -X POST -H "Content-Type: application/json" -d '{"text": "Create a video of a bouncing ball"}' http://127.0.0.1:8080/zero-shot-learning
-    """
-    text = request.json.get("text")
-    prompt = f"Generate python code for the following text:\n\n{text}"
-    client = OpenAI()
-    GPT_SYSTEM_INSTRUCTIONS = """Write Manim scripts for animations in Python. Generate code, not text. Never explain code. Never add functions. Never add comments. Never infinte loops. Never use other library than Manim/math. Only complete the code block. Use variables with length of maximum 2 characters. At the end use 'self.play'.
-
-```
-from manim import *
-from math import *
-
-class GenScene(Scene):
-    def construct(self):
-        # Write here
-```"""
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": GPT_SYSTEM_INSTRUCTIONS},
-            {"role": "user", "content": prompt},
-        ],
-    )
-
-    code = response.choices[0].message.content
-    return jsonify({"code": code}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
 
 def upload_to_azure_storage(file_path, video_storage_file_name):
