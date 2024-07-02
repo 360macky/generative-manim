@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "Generative Manim API"
+    return "Generative Manim Processor"
 
 
 @app.route("/generate-code", methods=["POST"])

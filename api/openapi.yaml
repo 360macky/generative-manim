@@ -1,0 +1,134 @@
+openapi: 3.0.1
+info:
+  title: Generative Manim API
+  description: API for generating Manim code and converting it to video.
+  version: 1.0.0
+  license:
+    name: Apache License, Version 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /generate-code:
+    post:
+      summary: Generate Manim Code
+      description: Generates Manim code based on a provided prompt using either OpenAI or Anthropic models.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt to generate Manim code.
+                  example: Create a blue circle and animate its creation.
+                model:
+                  type: string
+                  description: The model to use for code generation.
+                  example: gpt-4o
+      responses:
+        '200':
+          description: Successful response with generated code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: The generated Manim code.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /code-to-video:
+    post:
+      summary: Convert Code to Video
+      description: Converts provided Manim code to a video and uploads it to Azure Blob Storage.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The Manim code to convert to video.
+                  example: |
+                    from manim import *
+                    from math import *
+                    class GenScene(Scene):
+                      def construct(self):
+                        c = Circle(color=BLUE)
+                        self.play(Create(c))
+                file_name:
+                  type: string
+                  description: The name of the file to save the code.
+                  example: example.py
+                file_class:
+                  type: string
+                  description: The class name to render.
+                  example: GenScene
+                iteration:
+                  type: integer
+                  description: The iteration number for naming the video.
+                  example: 1
+                aspect_ratio:
+                  type: string
+                  description: The aspect ratio of the video.
+                  example: 16:9
+      responses:
+        '200':
+          description: Successful response with video URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message.
+                  video_url:
+                    type: string
+                    description: URL of the generated video.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message.
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+security:
+  - ApiKeyAuth: []
