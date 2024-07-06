@@ -41,12 +41,13 @@ It began as a prototype of a web app that uses [GPT-4](https://openai.com/resear
 
 **Models** are the core of Generative Manim. A model is a way to convert text to code, that can later be rendered in a video.
 
-| Name                  | Description                                                               | Engine                     | Phase |
-| --------------------- | ------------------------------------------------------------------------- | -------------------------- | ----- |
-| GM GPT-4o             | Latest GPT model from OpenAI powered by a custom System Prompt            | GPT-4o                     | ✅    |
-| GM GPT-3.5 Fine Tuned | First Fine-tuned model of GPT-3.5                                         | GPT-3.5                    | ✅    |
-| GM Claude Sonnet      | Claude Sonnet 3 model from Sonnet adapted with our custom System Prompt   | claude-3-sonnet-20240229   | ✅    |
-| GM Claude Sonnet 3.5  | Claude Sonnet 3.5 model from Sonnet adapted with our custom System Prompt | claude-3-5-sonnet-20240620 | ✅    |
+| Name                          | Description                                                               | Engine                     | Phase |
+| ----------------------------- | ------------------------------------------------------------------------- | -------------------------- | ----- |
+| GM GPT-4o                     | Latest GPT model from OpenAI powered by a custom System Prompt            | GPT-4o                     | ✅    |
+| GM GPT-3.5 Fine Tuned         | First Fine-tuned model of GPT-3.5                                         | GPT-3.5                    | ✅    |
+| GM GPT-3.5 Physics Fine Tuned | Fine-tuned GPT-3.5 model trained to generate Physics animations           | GPT-3.5                    | ✅    |
+| GM Claude Sonnet              | Claude Sonnet 3 model from Sonnet adapted with our custom System Prompt   | claude-3-sonnet-20240229   | ✅    |
+| GM Claude Sonnet 3.5          | Claude Sonnet 3.5 model from Sonnet adapted with our custom System Prompt | claude-3-5-sonnet-20240620 | ✅    |
 
 ### 📡 New Models
 
